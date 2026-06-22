@@ -1,0 +1,68 @@
+using System;
+class Order
+{
+    public int Id;
+    public double Price;
+    public Order(int id, double price)
+    {
+        Id = id;
+        Price = price;
+    }
+}
+class Program
+{
+    static void BubbleSort(Order[] a)
+    {
+        for (int i = 0; i < a.Length - 1; i++)
+            for (int j = 0; j < a.Length - i - 1; j++)
+                if (a[j].Price > a[j + 1].Price)
+                {
+                    Order t = a[j];
+                    a[j] = a[j + 1];
+                    a[j + 1] = t;
+                }
+    }
+    static int Partition(Order[] a, int low, int high)
+    {
+        double pivot = a[high].Price;
+        int i = low - 1;
+
+        for (int j = low; j < high; j++)
+            if (a[j].Price < pivot)
+            {
+                i++;
+                Order t = a[i];
+                a[i] = a[j];
+                a[j] = t;
+            }
+
+        Order temp = a[i + 1];
+        a[i + 1] = a[high];
+        a[high] = temp;
+
+        return i + 1;
+    }
+    static void QuickSort(Order[] a, int low, int high)
+    {
+        if (low < high)
+        {
+            int pi = Partition(a, low, high);
+            QuickSort(a, low, pi - 1);
+            QuickSort(a, pi + 1, high);
+        }
+    }
+    static void Main()
+    {
+        Order[] orders =
+        {
+            new Order(101,2500),
+            new Order(102,1200),
+            new Order(103,4500)
+        };
+
+        QuickSort(orders, 0, orders.Length - 1);
+
+        foreach (var o in orders)
+            Console.WriteLine(o.Id + " " + o.Price);
+    }
+}

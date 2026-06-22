@@ -1,0 +1,61 @@
+using System;
+class Employee
+{
+    public int Id;
+    public string Name;
+
+    public Employee(int id, string name)
+    {
+        Id = id;
+        Name = name;
+    }
+}
+
+class Program
+{
+    static Employee[] emp = new Employee[5];
+    static int count = 0;
+    static void Add(Employee e)
+    {
+        emp[count++] = e;
+    }
+    static void Search(int id)
+    {
+        for (int i = 0; i < count; i++)
+            if (emp[i].Id == id)
+                Console.WriteLine("Found: " + emp[i].Name);
+    }
+    static void Traverse()
+    {
+        for (int i = 0; i < count; i++)
+            Console.WriteLine(emp[i].Id + " " + emp[i].Name);
+    }
+    static void Delete(int id)
+    {
+        for (int i = 0; i < count; i++)
+        {
+            if (emp[i].Id == id)
+            {
+                for (int j = i; j < count - 1; j++)
+                    emp[j] = emp[j + 1];
+                count--;
+                break;
+            }
+        }
+    }
+
+    static void Main()
+    {
+        Add(new Employee(101, "John"));
+        Add(new Employee(102, "Alice"));
+
+        Traverse();
+
+        Search(102);
+
+        Delete(101);
+
+        Console.WriteLine("\nAfter Deletion:");
+        Traverse();
+    }
+}

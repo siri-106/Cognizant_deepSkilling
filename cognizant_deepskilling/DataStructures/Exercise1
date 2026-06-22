@@ -1,0 +1,52 @@
+using System;
+using System.Collections.Generic;
+class Product
+{
+    public int Id;
+    public string Name;
+    public int Quantity;
+    public double Price;
+    public Product(int id, string name, int qty, double price)
+    {
+        Id = id;
+        Name = name;
+        Quantity = qty;
+        Price = price;
+    }
+}
+class Program
+{
+    static Dictionary<int, Product> inventory = new Dictionary<int, Product>();
+    static void AddProduct(Product p)
+    {
+        inventory[p.Id] = p;
+    }
+
+    static void UpdateProduct(int id, int qty)
+    {
+        if (inventory.ContainsKey(id))
+            inventory[id].Quantity = qty;
+    }
+
+    static void DeleteProduct(int id)
+    {
+        inventory.Remove(id);
+    }
+
+    static void Display()
+    {
+        foreach (var p in inventory.Values)
+            Console.WriteLine($"{p.Id} {p.Name} Qty:{p.Quantity} Price:{p.Price}");
+    }
+    static void Main()
+    {
+        AddProduct(new Product(101, "Laptop", 10, 50000));
+        AddProduct(new Product(102, "Mouse", 50, 500));
+        Console.WriteLine("Inventory:");
+        Display();
+        UpdateProduct(101, 8);
+        DeleteProduct(102);
+        Console.WriteLine("\nAfter Update/Delete:");
+        Display();
+    }
+}

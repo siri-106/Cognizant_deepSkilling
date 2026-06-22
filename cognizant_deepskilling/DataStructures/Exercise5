@@ -1,0 +1,93 @@
+using System;
+
+class Task
+{
+    public int Id;
+    public string Name;
+    public Task Next;
+
+    public Task(int id, string name)
+    {
+        Id = id;
+        Name = name;
+        Next = null;
+    }
+}
+
+class Program
+{
+    static Task head = null;
+
+    static void Add(int id, string name)
+    {
+        Task t = new Task(id, name);
+
+        if (head == null)
+            head = t;
+        else
+        {
+            Task temp = head;
+            while (temp.Next != null)
+                temp = temp.Next;
+            temp.Next = t;
+        }
+    }
+
+    static void Search(int id)
+    {
+        Task temp = head;
+        while (temp != null)
+        {
+            if (temp.Id == id)
+            {
+                Console.WriteLine("Found: " + temp.Name);
+                return;
+            }
+            temp = temp.Next;
+        }
+    }
+
+    static void Traverse()
+    {
+        Task temp = head;
+        while (temp != null)
+        {
+            Console.WriteLine(temp.Id + " " + temp.Name);
+            temp = temp.Next;
+        }
+    }
+
+    static void Delete(int id)
+    {
+        if (head == null) return;
+
+        if (head.Id == id)
+        {
+            head = head.Next;
+            return;
+        }
+
+        Task temp = head;
+        while (temp.Next != null && temp.Next.Id != id)
+            temp = temp.Next;
+
+        if (temp.Next != null)
+            temp.Next = temp.Next.Next;
+    }
+
+    static void Main()
+    {
+        Add(1, "Design");
+        Add(2, "Coding");
+        Add(3, "Testing");
+
+        Traverse();
+
+        Search(2);
+
+        Delete(2);
+
+        Console.WriteLine("\nAfter Deletion:");
+        Traverse();
+    }
+}

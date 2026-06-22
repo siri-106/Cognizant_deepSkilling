@@ -1,0 +1,23 @@
+﻿using System;
+
+class Program
+{
+    static double FutureValue(double value, double rate, int years)
+    {
+        if (years == 0)
+            return value;
+
+        return FutureValue(value * (1 + rate), rate, years - 1);
+    }
+
+    static void Main()
+    {
+        double presentValue = 1000;
+        double growthRate = 0.10; // 10%
+        int years = 3;
+
+        double result = FutureValue(presentValue, growthRate, years);
+
+        Console.WriteLine("Future Value = " + result);
+    }
+}
